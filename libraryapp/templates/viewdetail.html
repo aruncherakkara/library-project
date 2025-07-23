@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block content %}
+    <div class="search-card">
+        <img src="/media/{{ view.image }}" alt="{{ view.name }}">
+        <div class="info">
+            <h5>{{ view.name }}</h5>
+            <p class="book_no"><b>BOOK NO:</b> {{ view.book_no }}</p>
+            <p class="name"><b>NAME:</b> {{ view.name }}</p>
+            <p class="author"><b>AUTHOR:</b> {{ view.author }}</p>
+            <p class="ctgry"><b>CATEGORY:</b> {{ view.ctgry }}</p>
+        </div>
+    </div>
+{% endblock %}

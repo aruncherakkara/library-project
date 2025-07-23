@@ -1,0 +1,108 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #f5f5f5;
+}
+
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-form {
+    background: linear-gradient(135deg, #232526, #414345); /* Stylish dark gradient */
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+    width: 400px;
+    color: white;
+}
+
+.login-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 25px;
+}
+
+.input-box {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-box i {
+    position: absolute;
+    top: 12px;
+    left: 10px;
+    color: #aaa;
+}
+
+.input-box input {
+    width: 100%;
+    padding: 12px 15px 12px 35px;
+    border: 2px solid #ccc;
+    border-radius: 25px;
+    background: #fff;
+    outline: none;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+    color: #333;
+}
+
+.input-box input:focus {
+    border-color: #007bff;
+}
+
+.remember-forgot-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(90deg, #00c6ff, #0072ff);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.login-btn:hover {
+    background: linear-gradient(90deg, #0072ff, #00c6ff);
+    box-shadow: 0 0 10px #00c6ff;
+}
+
+.register {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.register a {
+    color: #00c6ff;
+    text-decoration: none;
+}
+
+.register a:hover {
+    text-decoration: underline;
+}
+
+.form-error {
+    color: #ff4d4d;
+    background-color: #ffe6e6;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 8px;
+    font-weight: 500;
+    text-align: center;
+    text-transform: capitalize;
+    box-shadow: 0 0 8px rgba(255, 0, 0, 0.3);
+}

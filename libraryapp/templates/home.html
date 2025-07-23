@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+<div class="hero">
+    <div class="overlay">
+        <div class="hero-content text-center text-white">
+            <h1 class="display-4 fw-bold">📚 WELCOME TO CLUB LIBRARY</h1>
+            <p class="lead">Explore, Borrow, and Reserve your favorite books with ease 😌</p>
+
+            <div class="d-flex flex-wrap justify-content-center mt-4 gap-3">
+                <a href="/addbook" class="btn btn-outline-light">➕ Add Book</a>
+                <a href="/viewbooks" class="btn btn-outline-light">📖 View Books</a>
+                <a href="/members" class="btn btn-outline-light">👥 Members</a>
+                <a href="#" class="btn btn-outline-light">🔄 Borrow / Return</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+
+<div class="login-page">
+    <form action="/login/" method="post" class="login-form">
+        <h1 class="login-title">Login</h1>
+        {% csrf_token %}
+
+        <div class="input-box">
+            <i class='bx bxs-user'></i>
+            <input type="text" name="username" placeholder="Username" required>
+        </div>
+
+        <div class="input-box">
+            <i class='bx bxs-lock-alt'></i>
+            <input type="password" name="password" placeholder="Password" required>
+        </div>
+
+        <div class="remember-forgot-box">
+            <label for="remember">
+                <input type="checkbox" id="remember" name="remember"> Remember me
+            </label>
+            <a href="/forgotpassword">Forgot Password?</a>
+        </div>
+
+        <button type="submit" class="login-btn">Login</button>
+
+        
+        {% if error %}
+        <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+            <strong>Error:</strong> {{ error }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <script>
+            setTimeout(function () {
+                var alert = document.querySelector('.alert');
+                if (alert) {
+                    alert.classList.remove('show');
+                    alert.classList.add('hide');
+                }
+            }, 3000);
+        </script>
+        {% endif %}
+
+        <p class="register">
+            Don’t have an account?
+            <a href="/registeruser">Register</a>
+        </p>
+    </form>
+</div>
+{% if request.GET.msg == 'reset_success' %}
+<div class="position-fixed top-0 end-0 p-3" style="z-index: 11">
+ <div id="liveToast" class="toast show align-items-center text-white bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+         Password reset successful. Please login now.
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+</div>
+
+<script>
+  setTimeout(() => {
+    const toastEl = document.getElementById('liveToast');
+    if (toastEl) {
+      toastEl.classList.remove('show');
+      toastEl.classList.add('hide');
+    }
+  }, 3000);
+</script>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,36 @@
+ {% extends 'base.html'%}
+{% load static%}
+
+       
+ 
+    {% block content%}
+    <link rel="stylesheet" href="{% static 'css/search.css' %}">
+    {% for i in search %}
+ <div class="search-card">
+            <img src="/media/{{ i.image }}" alt="{{ i.name }}">
+            <div class="info">
+                <h5>{{ i.name }}</h5>
+                <p class="book_no"><b>BOOK NO:</b> {{ i.book_no }}</p>
+                <p class="name"><b>NAME:</b> {{ i.name }}</p>
+                <p class="author"><b>AUTHOR:</b> {{ i.author }}</p>
+                <p class="ctgry"><b>CATEGORY:</b> {{ i.ctgry }}</p>
+
+                <a href="/viewdetail/{{ i.id }}" class="neon-btn">
+                    <span></span><span></span><span></span><span></span>
+                    View
+                </a>
+                <a href="/editbook/{{ i.id }}" class="neon-btn warn">
+                    <span></span><span></span><span></span><span></span>
+                    Edit
+                </a>
+                <a href="/deletebook/{{ i.id }}" class="neon-btn danger">
+                    <span></span><span></span><span></span><span></span>
+                    Delete
+                </a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+          
+  {% endblock%}

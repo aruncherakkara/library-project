@@ -1,0 +1,54 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.hero {
+    position: relative;
+    height:100vh; 
+    background: url('../images/library.jpeg') no-repeat center center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.overlay {
+    background-color: rgba(0, 0, 0, 0.5); 
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-content {
+    padding: 20px;
+    color: white;
+    text-align: center;
+}
+
+.btn-outline-light {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 2px solid white;
+    background: transparent;
+    color: white;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.btn-outline-light:hover {
+    background-color: white;
+    color: black;
+}

@@ -1,0 +1,197 @@
+
+
+html, body {
+    
+    color: #fff;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.category-list {
+    list-style: none;
+    padding-left: 20px;
+}
+
+.category-list li {
+    display: inline-block;
+    margin: 10px;
+}
+
+.category-list a {
+    color: #000000;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.book-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+    gap: 20px;
+}
+
+.card {
+    width: calc(25% - 30px); 
+    min-width: 250px;
+    background: #111;
+    border-radius: 12px;
+    box-shadow: 0 0 15px #03e9f4;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.search-card {
+    background: #111;
+    border-radius: 15px;
+    box-shadow: 0 0 10px #03e9f4;
+    width: 22%; 
+    min-width: 250px;
+    max-width: 300px;
+    margin: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.search-card:hover {
+    transform: scale(1.05);
+}
+
+.search-card img {
+    width: 100%;
+    height: auto; 
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    object-fit: cover;
+    
+    
+}
+
+.info {
+    padding: 15px;
+    text-align: center;
+    flex-grow: 1;
+}
+
+.info h5 {
+    font-size: 20px;
+    color: #03e9f4;
+    margin-bottom: 10px;
+}
+
+.info p {
+    margin: 5px 0;
+}
+
+
+.neon-btn {
+    display: inline-block;
+    position: relative;
+    padding: 10px 20px;
+    color: #03e9f4;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: bold;
+    border: 2px solid #03e9f4;
+    border-radius: 5px;
+    margin: 10px 5px;
+    overflow: hidden;
+    transition: 0.2s;
+    z-index: 1;
+}
+
+.neon-btn:hover {
+    background: #03e9f4;
+    color: #111;
+    box-shadow: 0 0 10px #03e9f4,
+                0 0 20px #03e9f4,
+                0 0 40px #03e9f4,
+                0 0 80px #03e9f4;
+}
+
+.neon-btn span {
+    position: absolute;
+    display: block;
+}
+
+.neon-btn span:nth-child(1) {
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #03e9f4);
+    animation: animate1 1s linear infinite;
+}
+
+.neon-btn span:nth-child(2) {
+    top: -100%;
+    right: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg, transparent, #ffffff);
+    animation: animate2 1s linear infinite;
+    animation-delay: 0.25s;
+}
+
+.neon-btn span:nth-child(3) {
+    bottom: 0;
+    right: -100%;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(270deg, transparent, #ffffff);
+    animation: animate3 1s linear infinite;
+    animation-delay: 0.5s;
+}
+
+.neon-btn span:nth-child(4) {
+    bottom: -100%;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(360deg, transparent, #ffffff);
+    animation: animate4 1s linear infinite;
+    animation-delay: 0.75s;
+}
+
+@keyframes animate1 {
+    0% { left: -100%; }
+    50%, 100% { left: 100%; }
+}
+@keyframes animate2 {
+    0% { top: -100%; }
+    50%, 100% { top: 100%; }
+}
+@keyframes animate3 {
+    0% { right: -100%; }
+    50%, 100% { right: 100%; }
+}
+@keyframes animate4 {
+    0% { bottom: -100%; }
+    50%, 100% { bottom: 100%; }
+}
+
+
+.neon-btn.warn {
+    border-color: #ffc107;
+    color: #ffc107;
+}
+
+.neon-btn.warn:hover {
+    background: #ffc107;
+    color: #000;
+    box-shadow: 0 0 10px #ffc107, 0 0 20px #ffc107;
+}
+
+.neon-btn.danger {
+    border-color: #ff004f;
+    color: #ff004f;
+}
+
+.neon-btn.danger:hover {
+    background: #ff004f;
+    color: #fff;
+    box-shadow: 0 0 10px #ff004f, 0 0 20px #ff004f;
+}
