@@ -1,0 +1,57 @@
+body {
+    background: #000;
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+}
+
+.delete-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 70vh;
+}
+
+.delete-card {
+    background: #111;
+    padding: 30px;
+    border-radius: 12px;
+    width: 450px;
+    text-align: center;
+    border: 1px solid #03e9f4; /* simple border instead of glow */
+}
+
+.delete-card h4 {
+    color: #03e9f4;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.delete-img {
+    width: 200px;
+    height: auto;
+    border-radius: 10px;
+    border: 2px solid #03e9f4; 
+    margin-bottom: 20px;
+    background: #000;
+    object-fit: cover;
+}
+
+.btn-danger {
+    background: #ff004f;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-danger:hover {
+    background: #ff3366;
+}
+
+.btn-warning {
+    background: #ffaa00;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-warning:hover {
+    background: #ffcc33;
+}

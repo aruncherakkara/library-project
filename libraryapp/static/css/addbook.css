@@ -14,7 +14,7 @@ form {
     border-radius: 15px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(10px);
-    color: #fff;
+    color: white;
 }
 
 form p {
@@ -36,7 +36,7 @@ form textarea {
     border: none;
     border-radius: 8px;
     background-color: rgba(255, 255, 255, 0.1);
-    color: #fff;
+    color:black;
     font-size: 14px;
     outline: none;
 }
@@ -57,4 +57,15 @@ form input[type="submit"] {
 
 form input[type="submit"]:hover {
     background-color: #00b0dc;
+}
+
+.denied-box {
+    margin: 50px auto;
+    padding: 20px;
+    max-width: 500px;
+    background: #222;
+    border: 2px solid red;
+    border-radius: 12px;
+    color: white;
+    box-shadow: 0 0 15px red;
 }

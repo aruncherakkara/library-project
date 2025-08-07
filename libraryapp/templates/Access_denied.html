@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/addbook.css' %}">
+<div class="denied-box text-center">
+    <h2 style="color: red;">🚫 Access Denied</h2>
+    <p>Sorry, only <b>Admin</b> and <b>Librarians</b> can add books.</p>
+    <a href="/" class="btn btn-primary mt-3">Go Back to Home</a>
+</div>
+{% endblock %}

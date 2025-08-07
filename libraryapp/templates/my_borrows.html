@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2>My Borrowed Books</h2>
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Book</th>
+        <th>Borrow Date</th>
+        <th>Return Date</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for borrow in borrows %}
+        <tr>
+          <td>{{ borrow.book.name }}</td>
+          <td>{{ borrow.borrow_date|date:"d M Y" }}</td>
+          <td>
+            {% if borrow.return_date %}
+              {{ borrow.return_date|date:"d M Y" }}
+            {% else %}
+              Not Returned
+            {% endif %}
+          </td>
+          <td>
+            {% if borrow.returned_date %}
+              ✅ Returned
+            {% else %}
+              ⏳ Borrowed
+            {% endif %}
+          </td>
+          <td>
+            {% if not borrow.returned_date %}
+              <a href=" /return_book/ {{i.id }}" class="btn btn-danger btn-sm">Return</a>
+            {% else %}
+              -
+            {% endif %}
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="5">No borrowed books found.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

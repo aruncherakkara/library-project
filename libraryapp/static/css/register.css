@@ -1,0 +1,127 @@
+body {
+    background: linear-gradient(135deg, #2b1055, #7597de);
+    font-family: 'Roboto', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Navbar always on top */
+nav {
+    position: relative;
+    z-index: 10;
+}
+
+/* Main area centers the form */
+.main-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Stylish form box */
+.form-box.register {
+    background: rgba(255, 255, 255, 0.12);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 400px;
+    color: white;
+    backdrop-filter: blur(12px);
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+/* Title */
+.form-box h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+/* Input fields */
+.input-box {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-box input {
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #00f0ff;
+    outline: none;
+    color: white;
+    font-size: 16px;
+}
+
+.input-box label {
+    position: absolute;
+    top: 12px;
+    left: 0;
+    color: #ddd;
+    font-size: 16px;
+    transition: 0.3s;
+    pointer-events: none;
+}
+
+.input-box input:focus ~ label,
+.input-box input:valid ~ label {
+    top: -10px;
+    font-size: 12px;
+    color: #00f0ff;
+}
+
+.input-box i {
+    position: absolute;
+    right: 10px;
+    top: 12px;
+    color: #00f0ff;
+    font-size: 18px;
+}
+
+/* Button */
+.btn {
+    width: 100%;
+    background: cyan;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn:hover {
+    background: #00c9d9;
+}
+
+/* Error message */
+.error-msg {
+    color: #ff4d4d;
+    text-align: center;
+    margin-top: 15px;
+}
+
+/* Footer pinned bottom */
+footer {
+    position: relative;
+    width: 100%;
+    text-align: center;
+    padding: 12px;
+    background: black;
+    color: white;
+    font-size: 14px;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}

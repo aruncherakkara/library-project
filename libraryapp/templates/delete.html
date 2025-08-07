@@ -1,21 +1,40 @@
 {% extends 'base.html'%}
 {% load static%}
 
- 
-        {% block title %}
-        
-        {% endblock %}
-   
-    {% block content%}
-    <h4>are you sure want to delete {{del}}?</h4>
-    <img src="/media/{{del.image }}" width="200px"  alt="{{s.image}}">
+{% block title %}
+    Delete Book
+{% endblock %}
 
-     <form method="post">
-        {% csrf_token %}
-        <input type="submit" class="btn btn-danger" value="delete">
-        <a href="/" class="btn btn-warning">cancel</a>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/deletebook.css' %}">
+{% endblock %}
 
+{% block content %}
+<div class="delete-container">
+    <div class="delete-card shadow">
+        <h4 class="text-center">
+            Are you sure you want to delete <b>{{ del.name }}</b>?
+        </h4>
 
-     </form>
-          
-  {% endblock%}
+        <div class="text-center my-3">
+            {% if del.image %}
+                <img src="{{ del.image.url }}" alt="{{ del.name }}" class="delete-img">
+            {% else %}
+                <img src="{% static 'images/default_book.png' %}" alt="No Image" class="delete-img">
+            {% endif %}
+        </div>
+
+        <form method="post" onsubmit="return confirmDelete();" class="text-center">
+            {% csrf_token %}
+            <input type="submit" class="btn btn-danger px-4" value="Delete">
+            <a href="/" class="btn btn-warning px-4">Cancel</a>
+        </form>
+    </div>
+</div>
+
+<script>
+function confirmDelete() {
+    return confirm("Are you sure you want to delete this book?");
+}
+</script>
+{% endblock %}

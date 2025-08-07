@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">My Profile</h2>
+    <div class="card shadow p-4">
+        <div class="row">
+         <div class="col-md-3 text-center d-flex flex-column align-items-center">
+            {% if profile.profile_pic %}
+                <img src="{{ profile.profile_pic.url }}" alt="Profile Photo" 
+                    class="img-thumbnail mb-3" width="150">
+            {% else %}
+                <img src="{% static 'images/default.png' %}" alt="Default Photo" 
+                    class="img-thumbnail mb-3" width="150">
+            {% endif %}
+
+            <div class="w-100">
+                <a href="/completeprofile" class="btn btn-outline-primary btn-lg w-100 mt-3">
+                    <i class="bi bi-pencil-square"></i> Edit Profile
+                </a>
+            </div>
+         </div>
+
+            <div class="col-md-9">
+                <p><strong>Username:</strong> {{ profile.user.username }}</p>
+                <p><strong>Full Name:</strong> {{ profile.fullname }}</p>
+                <p><strong>Email:</strong> {{ profile.user.email }}</p>
+                <p><strong>Phone:</strong> {{ profile.phone }}</p>
+                <p><strong>Address:</strong> {{ profile.address }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Borrowed Books -->
+    <div class="mt-5">
+        <h4><i class="bi bi-journal-bookmark"></i> Books I Borrowed</h4>
+        {% if borrowed_books %}
+            <div class="row">
+                {% for b in borrowed_books %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100 shadow-sm">
+                            {% if b.book.image %}
+                                <img src="{{ b.book.image.url }}" class="card-img-top" 
+                                     alt="{{ b.book.name }}" style="height:200px; object-fit:cover;">
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title">{{ b.book.name }}</h5>
+                                <p class="card-text"><strong>Author:</strong> {{ b.book.author }}</p>
+                                <p><strong>Borrowed On:</strong> {{ b.borrow_date|date:"M d, Y" }}</p>
+                                {% if b.return_date %}
+                                    <p class="text-success"><strong>Returned:</strong> {{ b.return_date|date:"M d, Y" }}</p>
+                                {% else %}
+                                    <p class="text-danger"><strong>Status:</strong> Not Returned</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="text-muted">No books borrowed yet.</p>
+        {% endif %}
+    </div>
+
+   
+    {% if added_books %}
+    <div class="mt-5">
+        <h4><i class="bi bi-plus-circle"></i> Books I Added</h4>
+        <div class="row">
+            {% for book in added_books %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        {% if book.image %}
+                            <img src="{{ book.image.url }}" class="card-img-top" 
+                                 alt="{{ book.name }}" style="height:200px; object-fit:cover;">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ book.name }}</h5>
+                            <p class="card-text"><strong>Author:</strong> {{ book.author }}</p>
+                            <p><strong>Book No:</strong> {{ book.book_no }}</p>
+                            <p><strong>Category:</strong> {{ book.category }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

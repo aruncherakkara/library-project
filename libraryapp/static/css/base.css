@@ -1,73 +1,108 @@
-body {
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(to right, #fdfcfb, #e2d1c3);
-    font-family: 'Segoe UI', sans-serif;
+/* Navbar */
+.navbar {
+    background: linear-gradient(90deg, #0f2027, #203a43, #2c5364);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    border-bottom: 2px solid #03e9f4;
 }
 
-html, body {
-    height: 100%;
-}
-
-main {
-    min-height: 80vh;
-}
-
-.home-section {
-    min-height: 80vh;
-    background-image: url('https://cdn.pixabay.com/photo/2015/09/05/22/46/library-925365_960_720.jpg');
-    background-size: cover;
-    background-position: center;
-    padding: 60px 20px;
-    color: #000;
-    background-repeat: no-repeat;
-}
-
-.custom-navbar {
-    background: linear-gradient(to right, #4e54c8, #8f94fb); 
-}
-
-.custom-navbar .navbar-brand,
-.custom-navbar .nav-link {
-    color: white;
-}
-.custom-navbar .nav-link:hover {
-    color: #ffd700;
-}
-
-
-.nav-btn {
-    border-radius: 12px;
-    padding: 12px 25px;
-    font-weight: 500;
+/* Search input text color fix */
+.navbar .form-control {
+    border-radius: 25px;
+    border: 1px solid #03e9f4;
+    background: #1b1b1b;
+    color: #fff;   /* ✅ Search bar text white */
+    box-shadow: none;
     transition: 0.3s;
-    backdrop-filter: blur(5px);
 }
 
-.nav-btn:hover {
-    background-color: #6f4e37;
-    color: white;
+.navbar .form-control::placeholder {
+    color: #bbb;   /* ✅ Lighter placeholder color */
 }
 
-.footer {
-    background: linear-gradient(90deg, #0d0d0d, #1a1a1a);
-    color: #f1f1f1;
-    text-align: center;
-    padding: 1rem 0;
-    font-size: 1rem;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    border-top: 2px solid #05cc1c;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
-    margin-top: auto;
-    position: relative;
-    bottom: 0;
+/* Brand / Library Name */
+.navbar-brand {
+    font-family: 'Playfair Display', serif;  /* Elegant font */
+    font-size: 1.4rem;
+    color: #ffffff !important;   /* White font */
+    letter-spacing: 1px;
+    text-shadow: none;           /* Removed glow */
+    transition: transform 0.3s ease;
+}
+
+.navbar-brand:hover {
+    transform: scale(1.05);
+    color: #f1f1f1 !important;   /* Slightly lighter on hover */
+}
+
+/* Search button text white */
+.navbar .btn-outline-light {
+    border-radius: 25px;
+    border: 1px solid #03e9f4;
+    color: #fff !important;
+    background: transparent;
+}
+
+.navbar .btn-outline-light:hover {
+    background: #03e9f4;
+    color: #111 !important;
+}
+
+
+/* Footer styling */
+.footer-dark {
+    background: linear-gradient(180deg, #000, #111);
+    color: #ccc;
+    padding: 50px 0 20px;   /* bottom padding reduced */
+    font-size: 0.95rem;
+    border-top: 2px solid #03e9f4;
     width: 100%;
-    transition: all 0.3s ease-in-out;
 }
 
-.footer:hover {
-    background: linear-gradient(90deg, #1a1a1a, #0d0d0d);
-    color:#05cc1c;
-    letter-spacing: 0.5px;
+/* Equal columns for 4 sections */
+.footer-dark .row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
+.footer-dark .col-md-3 {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 20px;
+}
+
+/* Footer Headings */
+.footer-dark h5 {
+    margin-bottom: 20px;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #03e9f4;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Footer text */
+.footer-dark p,
+.footer-dark li,
+.footer-dark a {
+    font-weight: normal;
+    font-family: 'Roboto', sans-serif;
+    color: #ffffff;
+    font-size: 1rem;
+    text-decoration: none;
+    line-height: 1.7;
+}
+
+.footer-dark a:hover {
+    color: #03e9f4;
+    transform: translateX(4px);
+}
+
+/* Fix for unwanted white space */
+html, body {
+    height: auto;     /* ✅ removes forced stretching */
+    margin: 0;
+}
+
+body {
+    display: block;   /* ✅ no flex forcing footer */
+}

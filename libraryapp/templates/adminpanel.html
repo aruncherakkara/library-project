@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2><i class="bi bi-speedometer2"></i> Admin Panel</h2>
+    <div class="card mt-3 p-4">
+        <p><strong><i class="bi bi-book"></i> Total Books:</strong> {{ total_books }}</p>
+        <p><strong><i class="bi bi-people"></i> Total Users:</strong> {{ total_users }}</p>
+        <p><strong><i class="bi bi-person-badge"></i> Total Librarians:</strong> {{ total_librarians }}</p>
+        <hr>
+        <a href="/addbook/" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Add Book
+        </a>
+        <a href="/viewbooks/" class="btn btn-primary">
+            <i class="bi bi-book-half"></i> View Books
+        </a>
+        <a href="/members/" class="btn btn-info">
+            <i class="bi bi-people-fill"></i> View Members
+        </a>
+    </div>
+
+    <!-- Manage Librarians -->
+    <div class="card mt-4 p-4">
+        <h4><i class="bi bi-person-gear"></i> Manage Librarians</h4>
+        <table class="table table-bordered text-light">
+            <thead>
+                <tr>
+                    <th><i class="bi bi-person"></i> Username</th>
+                    <th><i class="bi bi-envelope"></i> Email</th>
+                    <th><i class="bi bi-info-circle"></i> Status</th>
+                    <th><i class="bi bi-tools"></i> Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        {% if librarian_group in user.groups.all %}
+                            <span class="badge bg-success"><i class="bi bi-check-circle"></i> Librarian</span>
+                        {% else %}
+                            <span class="badge bg-secondary"><i class="bi bi-person"></i> User</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <form method="POST" style="display:inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="user_id" value="{{ user.id }}">
+                            {% if librarian_group in user.groups.all %}
+                                <button type="submit" name="action" value="demote" class="btn btn-danger btn-sm">
+                                    <i class="bi bi-arrow-down-circle"></i> Demote
+                                </button>
+                            {% else %}
+                                <button type="submit" name="action" value="promote" class="btn btn-success btn-sm">
+                                    <i class="bi bi-arrow-up-circle"></i> Promote
+                                </button>
+                            {% endif %}
+                        </form>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center">No users found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Manage Categories -->
+    <div class="card mt-4 p-4">
+        <h4><i class="bi bi-tags"></i> Manage Categories</h4>
+        <form method="POST" action="{% url 'add_category' %}" class="d-flex mb-3">
+            {% csrf_token %}
+            <input type="text" name="name" class="form-control me-2" placeholder="New Category" required>
+            <button type="submit" class="btn btn-success">
+                <i class="bi bi-plus-circle"></i> Add
+            </button>
+        </form>
+
+        <table class="table table-bordered text-light">
+            <thead>
+                <tr>
+                    <th><i class="bi bi-tag"></i> Category</th>
+                    <th><i class="bi bi-tools"></i> Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cat in categories %}
+                <tr>
+                    <td>{{ cat.name }}</td>
+                    <td>
+                        <form method="POST" action="{% url 'delete_category' cat.id %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                <i class="bi bi-trash"></i> Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="2" class="text-center">No categories found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

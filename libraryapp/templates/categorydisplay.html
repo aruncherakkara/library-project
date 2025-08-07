@@ -1,27 +1,55 @@
-{% extends 'base.html'%}
-{% load static%}
+{% extends 'base.html' %}
+{% load static %}
 
-{% block title %}{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/viewbooks.css' %}">
+{% endblock %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/categorydisplay.css' %}">
-<div class="card-wrapper">
-  {% for i in cat %}
-    <div class="card">
-      <img src="/media/{{ i.image }}" alt="{{ i.name }}">
-      <span class="featured">FEATURED</span>
-      <div class="name">{{ i.book_no}}</div>
-      <div class="price">₹ {{ i.name  }}</div>
-      <div class="desc">{{ i.author }}</div>
-      <div class="desc">{{ i.ctgry }}</div>
-      <div class="card-buttons">
-        <a href="/viewdetail/{{ i.id }}" class="btn btn-primary">View</a>
-        {% if i.usr == user %}
-          <a href="/editbook/{{ i.id }}" class="btn btn-warning">Edit</a>
-          <a href="/deletebook/{{ i.id }}" class="btn btn-danger">Delete</a>
-        {% endif %}
-      </div>
+<div class="container mt-4">
+    <h2 class="text-center mb-4" style="color:white;">Books in {{ category.name }}</h2>
+
+    <div class="book-container">
+        {% for book in cat_books %}
+            <div class="search-card">
+                {% if book.image %}
+                    <img src="{{ book.image.url }}" alt="{{ book.name }}">
+                {% else %}
+                    <img src="{% static 'images/default_book.png' %}" alt="No Image Available">
+                {% endif %}
+                <div class="info">
+                    <h5>{{ book.name }}</h5>
+                    <p class="book_no"><b>BOOK NO:</b> {{ book.book_no }}</p>
+
+                    <p class="is_available">
+                        <b>AVAILABLE:</b>
+                        {% if book.is_available %}
+                            <span class="badge bg-success">Yes</span>
+                        {% else %}
+                            <span class="badge bg-danger">No</span>
+                        {% endif %}
+                    </p>
+
+                    <a href="{% url 'viewdetail' book.id %}" class="neon-btn">
+                        <span></span><span></span><span></span><span></span>
+                        <i class="bi bi-eye"></i> View
+                    </a>
+                    
+                    {% if is_librarian %}
+                        <a href="{% url 'editbook' book.id %}" class="neon-btn warn">
+                            <span></span><span></span><span></span><span></span>
+                            <i class="bi bi-pencil-square"></i> Edit
+                        </a>
+                        <a href="{% url 'deletebook' book.id %}" class="neon-btn danger">
+                            <span></span><span></span><span></span><span></span>
+                            <i class="bi bi-trash"></i> Delete
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        {% empty %}
+            <p class="text-center text-light">No books available in this category.</p>
+        {% endfor %}
     </div>
-  {% endfor %}
 </div>
 {% endblock %}

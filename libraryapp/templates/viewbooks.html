@@ -1,43 +1,54 @@
 {% extends 'base.html' %}
 {% load static %}
 
-
-{% block extra_css%}
+{% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/viewbooks.css' %}">
 {% endblock %}
 
 {% block content %}
-<ul class="category-list">
-    {% for i in ctgry %}
-        <li><a href="/categorydisplay/{{ i.id }}">{{ i.name }}</a></li>
-    {% endfor %}
-</ul>
+<div class="container mt-4">
+    <h2 class="text-center mb-4 text-light">Library Books</h2>
 
-<div class="book-container">
-    {% for i in book %}
-        <div class="search-card">
-            <img src="/media/{{ i.image }}" alt="{{ i.name }}">
-            <div class="info">
-                <h5>{{ i.name }}</h5>
-                <p class="book_no"><b>BOOK NO:</b> {{ i.book_no }}</p>
-                <p class="name"><b>NAME:</b> {{ i.name }}</p>
-                <p class="author"><b>AUTHOR:</b> {{ i.author }}</p>
-                <p class="ctgry"><b>CATEGORY:</b> {{ i.ctgry }}</p>
 
-                <a href="/viewdetail/{{ i.id }}" class="neon-btn">
-                    <span></span><span></span><span></span><span></span>
-                    View
-                </a>
-                <a href="/editbook/{{ i.id }}" class="neon-btn warn">
-                    <span></span><span></span><span></span><span></span>
-                    Edit
-                </a>
-                <a href="/deletebook/{{ i.id }}" class="neon-btn danger">
-                    <span></span><span></span><span></span><span></span>
-                    Delete
-                </a>
+     <div class="text-center mb-4">
+        <h5 style="color: white;">Browse by Category:</h5>
+        {% for c in category %}
+           <a href="{% url 'categorydisplay' c.id %}" class="badge bg-info text-dark mx-1">
+    {{ c.name }}
+</a>
+
+        {% empty %}
+            <p class="text-light">No categories found.</p>
+        {% endfor %}
+    </div>
+
+    <div class="book-container">
+        {% for b in book %}
+            <div class="search-card">
+                {% if b.image %}
+                    <img src="{{ b.image.url }}" alt="{{ b.name }}">
+                {% else %}
+                    <img src="{% static 'images/default_book.png' %}" alt="No image available">
+                {% endif %}
+                <div class="info">
+                    <h5>{{ b.name }}</h5>
+                    <p class="is_available">
+                        {% if b.is_available %}
+                            <span class="badge bg-success">Available</span>
+                        {% else %}
+                            <span class="badge bg-danger">Not Available</span>
+                        {% endif %}
+                    </p>
+
+                    <a href="{% url 'viewdetail' b.id %}" class="neon-btn">
+                        <span></span><span></span><span></span><span></span>
+                        <i class="bi bi-eye"></i> View
+                    </a>
+                </div>
             </div>
-        </div>
-    {% endfor %}
+        {% empty %}
+            <p class="text-center">No books found in the library.</p>
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}

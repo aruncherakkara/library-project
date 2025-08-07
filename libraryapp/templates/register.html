@@ -1,21 +1,60 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/register.css' %}">
+{% endblock %}
+
 {% block content %}
+<div class="main-container">
+    <div class="form-box register">
+        <h2 class="title animation">Sign Up</h2>
 
+        <form action="/saveuser/" method="post">
+            {% csrf_token %}
 
-<form action="/saveuser/" method="post">
-  {% csrf_token %}
-  <input name="username" type="text" placeholder="Username">
-  <input name="firstname" type="text" placeholder="First Name">
-  <input name="lastname" type="text" placeholder="Last Name">
-  <input name="email" type="email" placeholder="Email">
-  <input name="password" type="password" placeholder="Password">
-  <input name="cpassword" type="password" placeholder="Confirm Password">
-  <input type="submit" value="Create Account">
+            <div class="input-box animation">
+                <input type="text" name="username" required>
+                <label>Username</label>
+                <i class="bi bi-person"></i>
+            </div>
 
-</form>
-  {% if wrong %}
-  {{wrong}}
-  {% endif %}
+            <div class="input-box animation">
+                <input type="text" name="firstname" required>
+                <label>First Name</label>
+                <i class="bi bi-person-badge"></i>
+            </div>
+
+            <div class="input-box animation">
+                <input type="text" name="lastname" required>
+                <label>Last Name</label>
+                <i class="bi bi-person-circle"></i>
+            </div>
+
+            <div class="input-box animation">
+                <input type="email" name="email" required>
+                <label>Email</label>
+                <i class="bi bi-envelope"></i>
+            </div>
+
+            <div class="input-box animation">
+                <input type="password" name="password" required>
+                <label>Password</label>
+                <i class="bi bi-lock"></i>
+            </div>
+
+            <div class="input-box animation">
+                <input type="password" name="cpassword" required>
+                <label>Confirm Password</label>
+                <i class="bi bi-lock-fill"></i>
+            </div>
+
+            <button type="submit" class="btn animation">Sign Up</button>
+
+            {% if wrong %}
+            <p class="error-msg">{{ wrong }}</p>
+            {% endif %}
+        </form>
+    </div>
+</div>
 {% endblock %}

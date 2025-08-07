@@ -1,0 +1,144 @@
+.view-detail-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 30px;
+    padding: 30px;
+    background: #111;
+    border-radius: 12px;
+    box-shadow: 0 0 15px #03e9f4;
+    margin: 30px auto;
+    width: 80%;
+    flex-wrap: wrap; 
+}
+
+.view-detail-container img {
+    width: 40%;
+    max-width: 400px;
+    border-radius: 12px;
+    object-fit: cover;
+    box-shadow: 0 0 10px #03e9f4;
+}
+
+.view-detail-info {
+    width: 50%;
+    color: #fff;
+    text-align: left;
+}
+
+.view-detail-info h2 {
+    color: #03e9f4;
+    margin-bottom: 15px;
+}
+
+.view-detail-info p {
+    font-size: 16px;
+    margin: 8px 0;
+}
+
+.action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.action-buttons form {
+    display: inline-block;
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+}
+
+.book-title {
+    color: #ff4da6;  
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.detail-label {
+    color: #03e9f4;  
+    font-weight: bold;
+    margin-right: 8px;
+}
+
+.detail-value {
+    color: #f8f9fa;  
+}
+
+.badge-yes {
+    background-color: #03e9f4 !important; 
+    color: #111 !important;
+    font-weight: bold;
+    box-shadow: 0 0 8px #03e9f4, 0 0 12px #03e9f4;
+    padding: 5px 12px;
+    border-radius: 6px;
+}
+
+.badge-no {
+    background-color: #ff004f !important; 
+    color: #fff !important;
+    font-weight: bold;
+    box-shadow: 0 0 8px #ff004f, 0 0 12px #ff004f;
+    padding: 5px 12px;
+    border-radius: 6px;
+}
+
+
+@media (max-width: 992px) {
+    .view-detail-container {
+        width: 90%;
+        padding: 20px;
+        gap: 20px;
+    }
+    .view-detail-container img {
+        width: 45%;
+    }
+    .view-detail-info {
+        width: 50%;
+    }
+    .book-title {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .view-detail-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        width: 95%;
+    }
+    .view-detail-container img {
+        width: 80%;
+        max-width: 350px;
+    }
+    .view-detail-info {
+        width: 100%;
+        margin-top: 20px;
+    }
+    .book-title {
+        font-size: 22px;
+    }
+    .view-detail-info p {
+        font-size: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .view-detail-container {
+        padding: 15px;
+    }
+    .view-detail-container img {
+        width: 100%;
+    }
+    .book-title {
+        font-size: 20px;
+    }
+    .view-detail-info p {
+        font-size: 14px;
+    }
+}

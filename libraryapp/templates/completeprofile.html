@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/completeprofile.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="complete-profile-container">
+    <div class="profile-card">
+        <div class="profile-header">
+            <h3>Complete Your Profile</h3>
+        </div>
+        <div class="profile-body">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ fm.as_p }}
+                <button type="submit" class="btn-save">
+                    <i class="bi bi-check-circle"></i> Save Profile
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

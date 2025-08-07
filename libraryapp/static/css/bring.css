@@ -1,0 +1,69 @@
+body {
+    background: #000;
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+}
+
+.borrow-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+.borrow-card {
+    background: #111;
+    padding: 30px;
+    border-radius: 12px;
+    width: 450px;
+    border: 1px solid #03e9f4; /* clean border, no glow */
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+}
+
+.borrow-card h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #03e9f4;
+}
+
+.borrow-card form label {
+    font-weight: bold;
+    color: #ccc;
+}
+
+.borrow-card form input,
+.borrow-card form select,
+.borrow-card form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 8px;
+    margin-bottom: 18px;
+    border: 1px solid #444;
+    border-radius: 6px;
+    background: #222;
+    color: #fff;
+    outline: none;
+}
+
+.borrow-card form input:focus,
+.borrow-card form select:focus,
+.borrow-card form textarea:focus {
+    border-color: #03e9f4;
+    background: #1a1a1a;
+}
+
+.borrow-card button {
+    width: 100%;
+    background: #03e9f4;
+    color: #111;
+    font-weight: bold;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.borrow-card button:hover {
+    background: #00d9ff;
+}

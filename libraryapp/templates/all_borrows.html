@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/all_borrows.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="page-title">Borrowed Books</h2>
+
+    <div class="table-responsive">
+        <table class="table custom-table">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Book</th>
+                    <th>Borrow Date</th>
+                    <th>Return Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for borrow in borrows %}
+                <tr>
+                    <td>{{ borrow.user.username }}</td>
+                    <td>{{ borrow.book.name }}</td>
+                    <td>{{ borrow.borrow_date|date:"d M Y, h:i A" }}</td>
+                    <td>
+                        {% if borrow.return_date %}
+                            {{ borrow.return_date|date:"d M Y, h:i A" }}
+                        {% else %}
+                            <span class="badge badge-pending">Not Returned</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if borrow.return_date %}
+                            <span class="badge badge-returned">Returned</span>
+                        {% else %}
+                            <span class="badge badge-borrowed">Borrowed</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if not borrow.return_date %}
+                            <a href="{% url 'librarian_return_book' borrow.id %}" class="neon-btn warn">
+                                <i class="bi bi-arrow-return-left"></i> Mark Returned
+                            </a>
+                        {% else %}
+                            <span class="text-muted">--</span>
+                        {% endif %}
+                        
+                       <form action="{% url 'delete_borrow' borrow.id %}" method="post" style="display:inline;" 
+                            onsubmit="return confirm('Are you sure you want to delete this borrow history?');">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                <i class="bi bi-trash"></i> Delete
+                            </button>
+                        </form>
+
+
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">No borrow records available.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
