@@ -6,13 +6,13 @@ body {
     flex-direction: column;
 }
 
-/* Navbar always on top */
+
 nav {
     position: relative;
     z-index: 10;
 }
 
-/* Main area centers the form */
+
 .main-container {
     flex: 1;
     display: flex;
@@ -21,7 +21,7 @@ nav {
     padding: 20px;
 }
 
-/* Stylish form box */
+
 .form-box.register {
     background: rgba(255, 255, 255, 0.12);
     padding: 30px;
@@ -34,7 +34,7 @@ nav {
     animation: fadeIn 0.8s ease-in-out;
 }
 
-/* Title */
+
 .form-box h2 {
     text-align: center;
     margin-bottom: 25px;
@@ -42,7 +42,7 @@ nav {
     font-size: 24px;
 }
 
-/* Input fields */
+
 .input-box {
     position: relative;
     margin-bottom: 20px;
@@ -84,7 +84,7 @@ nav {
     font-size: 18px;
 }
 
-/* Button */
+
 .btn {
     width: 100%;
     background: cyan;
@@ -102,14 +102,14 @@ nav {
     background: #00c9d9;
 }
 
-/* Error message */
+
 .error-msg {
     color: #ff4d4d;
     text-align: center;
     margin-top: 15px;
 }
 
-/* Footer pinned bottom */
+
 footer {
     position: relative;
     width: 100%;
@@ -120,7 +120,7 @@ footer {
     font-size: 14px;
 }
 
-/* Animation */
+
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-20px); }
     to { opacity: 1; transform: translateY(0); }

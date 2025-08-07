@@ -17,7 +17,7 @@ body {
     border-radius: 12px;
     width: 450px;
     text-align: center;
-    border: 1px solid #03e9f4; /* simple border instead of glow */
+    border: 1px solid #03e9f4; 
 }
 
 .delete-card h4 {

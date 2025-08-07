@@ -195,14 +195,14 @@ html, body {
 }
 
 @media (max-width: 1200px) {
-    .search-card { width: 22%; } /* 4 per row */
+    .search-card { width: 22%; } 
 }
 @media (max-width: 992px) {
-    .search-card { width: 30%; } /* 3 per row */
+    .search-card { width: 30%; } 
 }
 @media (max-width: 768px) {
-    .search-card { width: 45%; } /* 2 per row */
+    .search-card { width: 45%; } 
 }
 @media (max-width: 576px) {
-    .search-card { width: 90%; } /* 1 per row */
+    .search-card { width: 90%; } 
 }

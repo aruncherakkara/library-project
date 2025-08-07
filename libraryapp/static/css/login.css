@@ -13,7 +13,7 @@ body {
 }
 
 .login-form {
-    background: linear-gradient(135deg, #232526, #414345); /* Stylish dark gradient */
+    background: linear-gradient(135deg, #232526, #414345); 
     padding: 40px;
     border-radius: 15px;
     box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);

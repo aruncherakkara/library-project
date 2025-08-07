@@ -1,37 +1,37 @@
-/* Navbar */
+
 .navbar {
     background: linear-gradient(90deg, #0f2027, #203a43, #2c5364);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     border-bottom: 2px solid #03e9f4;
 }
 
-/* Search input text color fix */
+
 .navbar .form-control {
     border-radius: 25px;
     border: 1px solid #03e9f4;
     background: #1b1b1b;
-    color: #fff;   /* ✅ Search bar text white */
+    color: #fff;   
     box-shadow: none;
     transition: 0.3s;
 }
 
 .navbar .form-control::placeholder {
-    color: #bbb;   /* ✅ Lighter placeholder color */
+    color: #bbb;   
 }
 
-/* Brand / Library Name */
+
 .navbar-brand {
-    font-family: 'Playfair Display', serif;  /* Elegant font */
+    font-family: 'Playfair Display', serif;  
     font-size: 1.4rem;
-    color: #ffffff !important;   /* White font */
+    color: #ffffff !important;   
     letter-spacing: 1px;
-    text-shadow: none;           /* Removed glow */
+    text-shadow: none;           
     transition: transform 0.3s ease;
 }
 
 .navbar-brand:hover {
     transform: scale(1.05);
-    color: #f1f1f1 !important;   /* Slightly lighter on hover */
+    color: #f1f1f1 !important;   
 }
 
 /* Search button text white */
@@ -48,17 +48,17 @@
 }
 
 
-/* Footer styling */
+
 .footer-dark {
     background: linear-gradient(180deg, #000, #111);
     color: #ccc;
-    padding: 50px 0 20px;   /* bottom padding reduced */
+    padding: 50px 0 20px;  
     font-size: 0.95rem;
     border-top: 2px solid #03e9f4;
     width: 100%;
 }
 
-/* Equal columns for 4 sections */
+
 .footer-dark .row {
     display: flex;
     justify-content: space-between;
@@ -71,7 +71,7 @@
     margin-bottom: 20px;
 }
 
-/* Footer Headings */
+
 .footer-dark h5 {
     margin-bottom: 20px;
     font-size: 1.25rem;
@@ -80,7 +80,7 @@
     font-family: 'Poppins', sans-serif;
 }
 
-/* Footer text */
+
 .footer-dark p,
 .footer-dark li,
 .footer-dark a {
@@ -97,12 +97,12 @@
     transform: translateX(4px);
 }
 
-/* Fix for unwanted white space */
+
 html, body {
-    height: auto;     /* ✅ removes forced stretching */
+    height: auto;   
     margin: 0;
 }
 
 body {
-    display: block;   /* ✅ no flex forcing footer */
+    display: block;   
 }

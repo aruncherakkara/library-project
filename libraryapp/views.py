@@ -14,7 +14,7 @@ from django.contrib import messages
 
 
 
-# Create your views here.
+
 def home(request):
     is_librarian_or_admin = False
     if request.user.is_authenticated:
@@ -31,16 +31,16 @@ def addbookfn(request):
         if form.is_valid():
             book = form.save(commit=False)
 
-            # Set who added the book
+            
             book.added_by = request.user  
 
-            # initialize copies (example: default 1 copy if not set)
+            
             if not hasattr(book, "available_copies") or book.available_copies is None:
                 book.available_copies = 1
 
             book.save()
             messages.success(request, f"Book '{book.name}' added successfully.")
-            return redirect('/viewbooks')  # ✅ redirect after success
+            return redirect('/viewbooks')  
         else:
             messages.error(request, "Please correct the errors below.")
     else:
@@ -186,15 +186,15 @@ def adminpanelfn(request):
     except Group.DoesNotExist:
         total_librarians = 0  
 
-    categories = Category.objects.all()  # ✅ fetch all categories
-    users = User.objects.all()  # ✅ so you can manage librarian promotions
+    categories = Category.objects.all() 
+    users = User.objects.all()
 
     return render(request, 'adminpanel.html', {
         'total_books': total_books,
         'total_users': total_users,
         'total_librarians': total_librarians,
-        'categories': categories,   # ✅ send categories
-        'users': users,             # ✅ send users
+        'categories': categories,   
+        'users': users,             
         'librarian_group': librarian_group if 'librarian_group' in locals() else None
     })
 
@@ -241,7 +241,7 @@ def librarian_borrow_book(request, book_id):
     if request.method == "POST":
         form = BorrowForm(request.POST)
         if form.is_valid():
-            if book.available_copies > 0:  # ✅ check before borrowing
+            if book.available_copies > 0: 
                 borrow = form.save(commit=False)
                 borrow.book = book
                 if not borrow.user:
@@ -290,7 +290,7 @@ def all_borrowsfn(request):
 
 @login_required
 def borrow_book(request, book_id):
-    # ✅ Only librarian (superuser) can borrow
+    
     if not request.user.is_superuser:
         messages.error(request, "Only librarians can borrow books.")
         return redirect('viewdetail', e_id=book_id)
@@ -306,10 +306,10 @@ def borrow_book(request, book_id):
                 borrow.borrow_date = timezone.now()
                 borrow.save()
 
-                # ✅ Reduce available copies safely
+                
                 book.available_copies -= 1
                 if book.available_copies < 0:
-                    book.available_copies = 0  # prevent negative
+                    book.available_copies = 0 
                 book.save()
 
                 messages.success(request, f"{borrow.user.username} borrowed '{book.name}'.")
@@ -317,7 +317,7 @@ def borrow_book(request, book_id):
                 messages.error(request, f"No copies of '{book.name}' left.")
             return redirect('viewdetail', e_id=book.id)
     else:
-        # ✅ Pre-fill the book in the form
+        
         form = BorrowForm(initial={'book': book})
 
     return render(request, "borrow_book.html", {"form": form, "book": book})
@@ -337,7 +337,7 @@ def delete_borrow(request, borrow_id):
 def members_list(request):
     if not request.user.is_superuser:
         messages.error(request, "Only librarians can view members.")
-        return redirect('home')  # redirect non-librarians
+        return redirect('home')  
 
     members = User.objects.filter(is_superuser=False).order_by('username')
     total_members = members.count()
