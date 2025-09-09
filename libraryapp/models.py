@@ -10,11 +10,17 @@ class Category(models.Model):
     def __str__(self):
         return self.name
     
+class Language(models.Model):
+    name=models.CharField(max_length=200)
+    def __str__(self):
+        return self.name
+    
 class Book(models.Model):
     book_no=models.CharField(max_length=20,unique=True)
     name=models.CharField(max_length=40)
     author=models.CharField(max_length=40)
     category=models.ForeignKey(Category,on_delete=models.CASCADE,null=True,blank=True)
+    language=models.ForeignKey(Language,on_delete=models.CASCADE,null=True,blank=True)
     image=models.ImageField(upload_to='books',null=True,blank=True)
     created_at = models.DateTimeField(auto_now_add=True)  
     updated_at = models.DateTimeField(auto_now=True)
@@ -53,3 +59,20 @@ class Borrow(models.Model):
     @property
     def is_returned(self):
         return self.return_date is not None
+    
+
+
+class Reservation(models.Model):
+    STATUS_CHOICES = [
+        ('Pending', 'Pending'),
+        ('Approved', 'Approved'),
+        ('Rejected', 'Rejected'),
+    ]
+
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    reserved_at = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending')
+
+    def __str__(self):
+        return f"{self.user.username} reserved {self.book.name}"

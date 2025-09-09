@@ -48,7 +48,15 @@ urlpatterns = [
     path('delete_borrow/<int:borrow_id>/', delete_borrow, name='delete_borrow'),
     path('members/', members_list, name='members_list'),
     path('add_category/', add_category, name='add_category'),
-path('delete_category/<int:cat_id>/', delete_category, name='delete_category'),
+    path('delete_category/<int:cat_id>/', delete_category, name='delete_category'),
+    path('reserve/<int:book_id>/', reserve_book, name='reserve_book'),
+    path('reservations/', reservation_list, name='reservation_list'),
+    path("reservations/<int:pk>/approve/", approve_reservation, name="approve_reservation"),
+    path("reservations/<int:pk>/reject/", reject_reservation, name="reject_reservation"),
+    path("languages/add/", add_language, name="add_language"),
+    path("languages/delete/<int:language_id>/", delete_language, name="delete_language"),
+
+
 
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 

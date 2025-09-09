@@ -10,6 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@500&display=swap" rel="stylesheet">
 
 
@@ -65,6 +66,27 @@
 </div>
     </div>
 </nav>
+<div class="container mt-3">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm" role="alert">
+                {% if message.tags == "success" %}
+                    <i class="bi bi-check-circle-fill"></i>
+                {% elif message.tags == "warning" %}
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                {% elif message.tags == "error" %}
+                    <i class="bi bi-x-circle-fill"></i>
+                {% else %}
+                    <i class="bi bi-info-circle-fill"></i>
+                {% endif %}
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+
 
 <main class="container mt-4">
     {% if request.path != '/' %}
@@ -88,9 +110,9 @@
             <div class="row text-start">
                 <div class="col-md-3">
                     <h5>Contact</h5>
-                    <p>Niduvote,Kolathur,Kasaragod,<br>Kerala, 671541</p>
+                    <p>Niduvote,Kolathur post,Kasaragod,<br>Kerala, 671541</p>
                     <p><i class="bi bi-telephone-fill"></i> 04994 256027</p>
-                    <p><i class="bi bi-envelope"></i> souhridhagrandhalayam@gmail.com</p>
+                    <p><i class="bi bi-envelope"></i> <a href="souhridhagrandhalayam@gmail.com" >souhridhagrandhalayam@gmail.com</a></p>
                 </div>
                 <div class="col-md-3">
                     <h5>Quick Links</h5>
@@ -119,6 +141,7 @@
                         <li>Sangachethana Swasraya Sangam</a></li>
                         <li>Souhrida Yuvajana Sangam</li>
                         <li>Souhrida Balavedhi</li>
+                        <li>Souhrida Kudumbasree</li>
                     </ul>
                 </div>
             </div>
@@ -129,35 +152,5 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-{% if messages %}
-    {% for message in messages %}
-        <div class="modal fade" id="messageModal{{ forloop.counter }}" tabindex="-1">
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-              <div class="modal-header 
-                  {% if message.tags == 'error' %}bg-danger text-white
-                  {% elif message.tags == 'success' %}bg-success text-white
-                  {% else %}bg-primary text-white{% endif %}">
-                <h5 class="modal-title">Notification</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-              </div>
-              <div class="modal-body">
-                {{ message }}
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                var myModal = new bootstrap.Modal(document.getElementById("messageModal{{ forloop.counter }}"));
-                myModal.show();
-            });
-        </script>
-    {% endfor %}
-{% endif %}
 </body>
 </html>

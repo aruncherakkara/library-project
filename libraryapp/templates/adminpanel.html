@@ -7,16 +7,56 @@
         <p><strong><i class="bi bi-people"></i> Total Users:</strong> {{ total_users }}</p>
         <p><strong><i class="bi bi-person-badge"></i> Total Librarians:</strong> {{ total_librarians }}</p>
         <hr>
-        <a href="/addbook/" class="btn btn-success">
-            <i class="bi bi-plus-circle"></i> Add Book
-        </a>
-        <a href="/viewbooks/" class="btn btn-primary">
-            <i class="bi bi-book-half"></i> View Books
-        </a>
-        <a href="/members/" class="btn btn-info">
-            <i class="bi bi-people-fill"></i> View Members
-        </a>
+
+        <div class="container mt-4">
+    <h2>Librarian Dashboard</h2>
+    <div class="row">
+
+        <div class="col-md-3">
+      <div class="card text-center shadow-sm">
+        <div class="card-body">
+          <i class="bi bi-plus-circle fs-1"></i>
+          <h5 class="card-title">Add Book</h5>
+          <a href="/addbook/" class="btn btn-success">Add New Book</a>
+        </div>
+      </div>
     </div>
+
+        <div class="col-md-3">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+            <i class="bi bi-book fs-1"></i>
+            <h5 class="card-title">Books</h5>
+            <a href="/viewbooks/" class="btn btn-primary">Manage Books</a>
+            </div>
+        </div>
+        </div>
+
+        <div class="col-md-3">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+            <i class="bi bi-people fs-1"></i>
+            <h5 class="card-title">Users</h5>
+            <a href="/members/" class="btn btn-primary">Manage Users</a>
+            </div>
+        </div>
+        </div>
+
+    {% if user.is_staff %}
+    <div class="col-md-3">
+      <div class="card text-center shadow-sm">
+        <div class="card-body">
+          <i class="bi bi-bell fs-1"></i>
+          <h5 class="card-title">Reservations</h5>
+          <a href="{% url 'reservation_list' %}" class="btn btn-warning">View Reservations</a>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+  </div>
+  </div>
+</div>
 
     
     <div class="card mt-4 p-4">
@@ -106,5 +146,45 @@
             </tbody>
         </table>
     </div>
+
+    <div class="card mt-4 p-4">
+        <h4><i class="bi bi-translate"></i> Manage Languages</h4>
+        <form method="POST" action="{% url 'add_language' %}" class="d-flex mb-3">
+            {% csrf_token %}
+            <input type="text" name="name" class="form-control me-2" placeholder="New Language" required>
+            <button type="submit" class="btn btn-success">
+                <i class="bi bi-plus-circle"></i> Add
+            </button>
+        </form>
+
+        <table class="table table-bordered text-light">
+            <thead>
+                <tr>
+                    <th><i class="bi bi-translate"></i> Language</th>
+                    <th><i class="bi bi-tools"></i> Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for lang in languages %}
+                <tr>
+                    <td>{{ lang.name }}</td>
+                    <td>
+                        <form method="POST" action="{% url 'delete_language' lang.id %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                <i class="bi bi-trash"></i> Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="2" class="text-center">No languages found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
 </div>
 {% endblock %}

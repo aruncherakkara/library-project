@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2>Reservation Requests</h2>
+
+  {% if reservations %}
+    <table class="table table-bordered table-striped">
+      <thead class="table-dark">
+        <tr>
+          <th>User</th>
+          <th>Book</th>
+          <th>Status</th>
+          <th>Requested At</th>
+          {% if user.is_staff %}
+            <th>Actions</th>
+          {% endif %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for reservation in reservations %}
+          <tr>
+            <td>{{ reservation.user.username }}</td>
+            <td>{{ reservation.book.name }}</td>
+            <td>{{ reservation.status }}</td>
+            <td>{{ reservation.reserved_at }}</td>
+            {% if user.is_staff %}
+              <td>
+                {% if reservation.status == "Pending" %}
+                  <a href="{% url 'approve_reservation' reservation.id %}" class="btn btn-success btn-sm">
+                    <i class="bi bi-check-circle"></i> Approve
+                  </a>
+                  <a href="{% url 'reject_reservation' reservation.id %}" class="btn btn-danger btn-sm">
+                    <i class="bi bi-x-circle"></i> Reject
+                  </a>
+                {% else %}
+                  <span class="badge bg-info">{{ reservation.status }}</span>
+                {% endif %}
+              </td>
+            {% endif %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="alert alert-info">No reservations yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

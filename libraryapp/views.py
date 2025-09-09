@@ -188,13 +188,15 @@ def adminpanelfn(request):
 
     categories = Category.objects.all() 
     users = User.objects.all()
+    languages = Language.objects.all()
 
     return render(request, 'adminpanel.html', {
         'total_books': total_books,
         'total_users': total_users,
         'total_librarians': total_librarians,
         'categories': categories,   
-        'users': users,             
+        'users': users,
+        'languages': languages,             
         'librarian_group': librarian_group if 'librarian_group' in locals() else None
     })
 
@@ -358,4 +360,56 @@ def add_category(request):
 @login_required
 def delete_category(request, cat_id):
     Category.objects.filter(id=cat_id).delete()
+    return redirect('adminpanel')
+
+
+
+@login_required
+def reserve_book(request, book_id):
+    book = get_object_or_404(Book, id=book_id)
+    if not book.is_available:
+        Reservation.objects.create(user=request.user, book=book)
+        messages.success(request, f'You have reserved "{book.name}". The librarian will be notified.')
+    else:
+        messages.warning(request, f'"{book.name}" is still available. You can borrow it directly.')
+
+    return redirect('viewdetail', e_id=book.id)
+
+
+@login_required
+def reservation_list(request):
+    if not request.user.is_superuser:  
+        return redirect('home')  
+
+    reservations = Reservation.objects.all().order_by('-reserved_at')
+    return render(request, "reservation_list.html", {"reservations": reservations})
+
+
+@login_required
+def approve_reservation(request, pk):
+    reservation = get_object_or_404(Reservation, pk=pk)
+    reservation.status = "Approved"
+    reservation.save()
+    return redirect("reservation_list")
+
+
+@login_required
+def reject_reservation(request, pk):
+    reservation = get_object_or_404(Reservation, pk=pk)
+    reservation.status = "Rejected"
+    reservation.save()
+    return redirect("reservation_list")
+
+
+@login_required
+def add_language(request):
+    if request.method == "POST":
+        name = request.POST.get('name')
+        if name:
+            Language.objects.create(name=name)
+    return redirect('adminpanel')
+
+@login_required
+def delete_language(request, language_id):
+    Language.objects.filter(id=language_id).delete()
     return redirect('adminpanel')

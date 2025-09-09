@@ -37,6 +37,8 @@ admin.site.register(Category)
 admin.site.register(Book)
 admin.site.register(Profile)
 admin.site.register(Borrow)
+admin.site.register(Reservation)
+admin.site.register(Language)
 
 admin.site.unregister(Group)
 admin.site.register(Group, GroupAdminWithUsers)
