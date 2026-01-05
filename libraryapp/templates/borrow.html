@@ -1,12 +1,44 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block content %}
-<div class="container mt-4">
-  <h2>Borrow a Book</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-success">Borrow</button>
-  </form>
+<link rel="stylesheet" href="{% static 'css/bring.css' %}">
+
+<div class="borrow-container">
+  <div class="borrow-card">
+    <h2>Borrow "{{ book.name }}"</h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.media }}
+
+      <div class="form-group">
+        {{ form.user.label_tag }}
+        {{ form.user }}
+        {% if form.user.errors %}
+          <div class="text-danger">{{ form.user.errors }}</div>
+        {% endif %}
+      </div>
+
+      {{ form.book }}
+
+      <div class="form-group">
+        {{ form.borrow_date.label_tag }}
+        {{ form.borrow_date }}
+        {% if form.borrow_date.errors %}
+          <div class="text-danger">{{ form.borrow_date.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-group">
+        {{ form.return_date.label_tag }}
+        {{ form.return_date }}
+        {% if form.return_date.errors %}
+          <div class="text-danger">{{ form.return_date.errors }}</div>
+        {% endif %}
+      </div>
+
+      <button type="submit">Borrow</button>
+    </form>
+  </div>
 </div>
 {% endblock %}
-

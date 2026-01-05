@@ -12,12 +12,13 @@ body {
 }
 
 .borrow-card {
-    background: #111;
+    background: #fff;
     padding: 30px;
     border-radius: 12px;
     width: 450px;
     border: 1px solid #03e9f4;
     box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+    color: #000;
 }
 
 .borrow-card h2 {
@@ -28,28 +29,52 @@ body {
 
 .borrow-card form label {
     font-weight: bold;
-    color: #ccc;
+    color: #333;
 }
 
 .borrow-card form input,
 .borrow-card form select,
-.borrow-card form textarea {
+.borrow-card form textarea,
+.borrow-card .select2-container--default .select2-selection--single {
+    height: 44px;
     width: 100%;
     padding: 10px;
     margin-top: 8px;
     margin-bottom: 18px;
     border: 1px solid #444;
     border-radius: 6px;
-    background: #222;
-    color: #fff;
+    background: #fff;
+    color: #000;
     outline: none;
+    font-size: 14px;
 }
 
 .borrow-card form input:focus,
 .borrow-card form select:focus,
-.borrow-card form textarea:focus {
+.borrow-card form textarea:focus,
+.borrow-card .select2-container--default.select2-container--focus .select2-selection--single {
     border-color: #03e9f4;
-    background: #1a1a1a;
+    background: #fff;
+    color: #000;
+}
+
+.borrow-card .select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #000 !important;
+    line-height: 38px;
+}
+
+.borrow-card .select2-container--default .select2-selection--single .select2-selection__arrow b {
+    border-color: #000 transparent transparent transparent;
+}
+
+.select2-container--default .select2-results__option {
+    color: #000;
+    background: #fff;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background-color: #03e9f4;
+    color: #000;
 }
 
 .borrow-card button {

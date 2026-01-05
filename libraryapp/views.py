@@ -10,7 +10,8 @@ from django.http import HttpResponseForbidden
 from django.utils import timezone
 from django.urls import reverse
 from django.contrib import messages
-
+from dal import autocomplete
+from django.views import View
 
 
 
@@ -236,30 +237,26 @@ def is_librarian_or_admin(user):
     return user.is_superuser or user.groups.filter(name='Librarian').exists()
 
 
-@login_required
 def librarian_borrow_book(request, book_id):
     book = get_object_or_404(Book, id=book_id)
 
     if request.method == "POST":
         form = BorrowForm(request.POST)
         if form.is_valid():
-            if book.available_copies > 0: 
-                borrow = form.save(commit=False)
-                borrow.book = book
-                if not borrow.user:
-                    borrow.user = request.user
-                borrow.borrow_date = timezone.now()
-                borrow.save()
+            borrow = form.save(commit=False)
+            borrow.book = book  
+            borrow.borrow_date = timezone.now()
+            borrow.save()
 
-                book.available_copies -= 1
-                book.save()
+           
+            book.available_copies -= 1
+            book.save()
 
-                messages.success(request, f"{borrow.user.username} borrowed {book.name}")
-            else:
-                messages.error(request, "No copies available for this book.")
+            messages.success(request, f"{borrow.user.username} borrowed {book.name}")
             return redirect('viewdetail', e_id=book.id)
     else:
-        form = BorrowForm()
+        
+        form = BorrowForm(initial={'book': book})
 
     return render(request, "borrow_book.html", {"form": form, "book": book})
 
@@ -271,7 +268,7 @@ def librarian_return_book(request, borrow_id):
         borrow.return_date = timezone.now()
         borrow.save()
 
-        # Increase available copies
+       
         borrow.book.available_copies += 1
         borrow.book.save()
 
@@ -290,39 +287,7 @@ def all_borrowsfn(request):
     borrows = Borrow.objects.select_related('book', 'user').all()
     return render(request, 'all_borrows.html', {'borrows': borrows})
 
-@login_required
-def borrow_book(request, book_id):
-    
-    if not request.user.is_superuser:
-        messages.error(request, "Only librarians can borrow books.")
-        return redirect('viewdetail', e_id=book_id)
 
-    book = get_object_or_404(Book, id=book_id)
-
-    if request.method == "POST":
-        form = BorrowForm(request.POST)
-        if form.is_valid():
-            if book.available_copies > 0:
-                borrow = form.save(commit=False)
-                borrow.book = book
-                borrow.borrow_date = timezone.now()
-                borrow.save()
-
-                
-                book.available_copies -= 1
-                if book.available_copies < 0:
-                    book.available_copies = 0 
-                book.save()
-
-                messages.success(request, f"{borrow.user.username} borrowed '{book.name}'.")
-            else:
-                messages.error(request, f"No copies of '{book.name}' left.")
-            return redirect('viewdetail', e_id=book.id)
-    else:
-        
-        form = BorrowForm(initial={'book': book})
-
-    return render(request, "borrow_book.html", {"form": form, "book": book})
 
 @login_required
 def delete_borrow(request, borrow_id):
@@ -413,3 +378,76 @@ def add_language(request):
 def delete_language(request, language_id):
     Language.objects.filter(id=language_id).delete()
     return redirect('adminpanel')
+
+
+class UserAutocomplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        if not self.request.user.is_authenticated:
+            return User.objects.none()
+        qs = User.objects.all()
+        if self.q:
+            qs = qs.filter(username__icontains=self.q)
+        return qs
+
+class BookAutocomplete(autocomplete.Select2QuerySetView):
+    def get_queryset(self):
+        if not self.request.user.is_authenticated:
+            return Book.objects.none()
+        qs = Book.objects.all()
+        if self.q:  
+            qs = qs.filter(name__icontains=self.q)
+        return qs
+
+@login_required
+def borrow_book(request, book_id):
+    book = get_object_or_404(Book, id=book_id)
+
+    if request.method == "POST":
+        form = BorrowForm(request.POST)
+        if form.is_valid():
+            borrow = form.save(commit=False)
+            borrow.book = book
+            borrow.borrow_date = timezone.now()
+            borrow.return_date = None 
+            borrow.save()
+
+            if book.available_copies and book.available_copies > 0:
+                book.available_copies -= 1
+                book.save()
+
+            messages.success(request, f"{borrow.user.username} borrowed '{book.name}'.")
+            return redirect('viewdetail', e_id=book.id)
+    else:
+        form = BorrowForm(initial={'book': book})
+
+    return render(request, "borrow.html", {"form": form, "book": book})
+
+
+
+class BorrowBookView(View):
+    def get(self, request):
+        form = BorrowForm()
+        return render(request, 'borrow.html', {'form': form})
+
+    def post(self, request):
+        form = BorrowForm(request.POST)
+        if form.is_valid():
+            borrow = form.save(commit=False)
+            borrow.borrow_date = timezone.now()
+            borrow.save()
+            messages.success(request, f"{borrow.user.username} borrowed '{borrow.book.name}'.")
+            return redirect('borrow-general')
+        return render(request, 'borrow.html', {'form': form})
+
+def mark_returned(request, borrow_id):
+    borrow = get_object_or_404(Borrow, id=borrow_id)
+    if not borrow.return_date:  
+        borrow.return_date = timezone.now()
+        borrow.save()
+
+        book = borrow.book
+        book.available_copies += 1
+        book.save()
+
+        messages.success(request, f"'{book.name}' marked as returned.")
+    return redirect('borrow_history')

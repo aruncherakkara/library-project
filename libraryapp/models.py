@@ -49,17 +49,19 @@ class Profile(models.Model):
     
     
 class Borrow(models.Model):
-    user=models.ForeignKey(User,on_delete=models.CASCADE)
-    book=models.ForeignKey('Book',on_delete=models.CASCADE)
-    borrow_date=models.DateTimeField(default=timezone.now)
-    return_date=models.DateTimeField(null=True,blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    book = models.ForeignKey('Book', on_delete=models.CASCADE)
+    borrow_date = models.DateTimeField(default=timezone.now)
+    due_date = models.DateTimeField(null=True, blank=True)   # expected return date
+    return_date = models.DateTimeField(null=True, blank=True)  # actual returned date
+
     def __str__(self):
-        return f"{self.user.username} borrowed{self.book.name}"
-    
+        return f"{self.user.username} borrowed {self.book.name}"
+
     @property
     def is_returned(self):
         return self.return_date is not None
-    
+
 
 
 class Reservation(models.Model):

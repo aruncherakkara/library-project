@@ -25,6 +25,7 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('user-autocomplete/', UserAutocomplete.as_view(), name='user-autocomplete'),
     path('', home, name='home'),
     path('addbook/', addbookfn, name='addbook'),
     path('viewbooks/', viewbooksfn, name='viewbooks'),
@@ -44,7 +45,6 @@ urlpatterns = [
     path('librarian_borrow/<int:book_id>/', librarian_borrow_book, name='librarian_borrow_book'),
     path('librarian_return/<int:borrow_id>/', librarian_return_book, name='librarian_return_book'),
     path('librarian_borrows/', all_borrowsfn, name='all_borrows'),
-    path('borrow/<int:book_id>/', borrow_book, name='borrow_book'),
     path('delete_borrow/<int:borrow_id>/', delete_borrow, name='delete_borrow'),
     path('members/', members_list, name='members_list'),
     path('add_category/', add_category, name='add_category'),
@@ -55,6 +55,10 @@ urlpatterns = [
     path("reservations/<int:pk>/reject/", reject_reservation, name="reject_reservation"),
     path("languages/add/", add_language, name="add_language"),
     path("languages/delete/<int:language_id>/", delete_language, name="delete_language"),
+    path('borrow/<int:book_id>/', borrow_book, name='borrow_book'),
+    path('borrow-general/', BorrowBookView.as_view(), name='borrow-general'),
+    path('book-autocomplete/', BookAutocomplete.as_view(), name='book-autocomplete'),
+    path('borrow_book/<int:borrow_book_id>/return/', mark_returned, name='mark_returned'),
 
 
 
