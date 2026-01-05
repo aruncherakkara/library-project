@@ -1,8 +1,8 @@
-from django.shortcuts import render,redirect,get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import *
 from .form import *
-from django.contrib.auth.models import User,auth,Group
+from django.contrib.auth.models import User, auth, Group
 from datetime import timedelta
 from django.db.models import Q
 from django.contrib.auth.decorators import login_required
@@ -14,8 +14,6 @@ from dal import autocomplete
 from django.views import View
 
 
-
-
 def home(request):
     is_librarian_or_admin = False
     if request.user.is_authenticated:
@@ -25,35 +23,36 @@ def home(request):
     return render(request, 'home.html', {
         'is_librarian_or_admin': is_librarian_or_admin
     })
+
+
 @login_required
 def addbookfn(request):
     if request.method == "POST":
-        form = bookform(request.POST, request.FILES)
+        form = BookForm(request.POST, request.FILES)
         if form.is_valid():
             book = form.save(commit=False)
 
-            
-            book.added_by = request.user  
+            book.added_by = request.user
 
-            
             if not hasattr(book, "available_copies") or book.available_copies is None:
                 book.available_copies = 1
 
             book.save()
-            messages.success(request, f"Book '{book.name}' added successfully.")
-            return redirect('/viewbooks')  
+            messages.success(
+                request, f"Book '{book.name}' added successfully.")
+            return redirect('/viewbooks')
         else:
             messages.error(request, "Please correct the errors below.")
     else:
-        form = bookform()
+        form = BookForm()
     return render(request, "addbook.html", {"form": form})
-
 
 
 def viewbooksfn(request):
     x = Book.objects.all()
-    y= Category.objects.all()
-    return render(request, 'viewbooks.html', {'book': x,'category':y })
+    y = Category.objects.all()
+    return render(request, 'viewbooks.html', {'book': x, 'category': y})
+
 
 def categorydisplayfn(request, c_id):
     x = Book.objects.filter(category_id=c_id)
@@ -62,47 +61,51 @@ def categorydisplayfn(request, c_id):
         'cat_books': x,
         'category': y
     })
+
+
 def registeruserfn(request):
-   return render(request,'register.html')
+    return render(request, 'register.html')
+
 
 def saveuserfn(request):
-   a=request.POST['username']
-   b=request.POST['firstname']
-   c=request.POST['lastname']
-   d=request.POST['email']
-   e=request.POST['password']
-   f=request.POST['cpassword']
-   if e==f:
-      if User.objects.filter(username=a).exists():
-        return render(request,'register.html',{'wrong':'Username already taken'})
-      elif User.objects.filter(email=d).exists():
-        return render(request,'register.html',{'wrong':'Email ID already taken'})
-      else:
-        User.objects.create_user(username=a,first_name=b,last_name=c,email=d,password=e)
-        return redirect('/')
-   else:
-        return render(request,'saveuser.html',{'wrong':'incorrect password'})
+    a = request.POST['username']
+    b = request.POST['firstname']
+    c = request.POST['lastname']
+    d = request.POST['email']
+    e = request.POST['password']
+    f = request.POST['cpassword']
+    if e == f:
+        if User.objects.filter(username=a).exists():
+            return render(request, 'register.html', {'wrong': 'Username already taken'})
+        elif User.objects.filter(email=d).exists():
+            return render(request, 'register.html', {'wrong': 'Email ID already taken'})
+        else:
+            User.objects.create_user(
+                username=a, first_name=b, last_name=c, email=d, password=e)
+            return redirect('/')
+    else:
+        return render(request, 'saveuser.html', {'wrong': 'incorrect password'})
 
 
 def loginfn(request):
-   if request.method == 'POST':
-      a = request.POST['username']
-      e = request.POST['password']
-      remember=request.POST.get('remember')
-      x = auth.authenticate(username=a, password=e)
-      if x:
-         auth.login(request, x)
-         if remember:
-            request.session.set_expiry(timedelta(days=7))
-         else:
-            request.session.set_expiry(0)
+    if request.method == 'POST':
+        a = request.POST['username']
+        e = request.POST['password']
+        remember = request.POST.get('remember')
+        x = auth.authenticate(username=a, password=e)
+        if x:
+            auth.login(request, x)
+            if remember:
+                request.session.set_expiry(timedelta(days=7))
+            else:
+                request.session.set_expiry(0)
 
-         return redirect('/')
-      else:
-         return render(request, 'login.html', {'error': 'invalid username or password'})
-   else:
-      return render(request, 'login.html')
-   
+            return redirect('/')
+        else:
+            return render(request, 'login.html', {'error': 'invalid username or password'})
+    else:
+        return render(request, 'login.html')
+
 
 def forgotpasswordfn(request):
     if request.method == 'POST':
@@ -123,19 +126,23 @@ def forgotpasswordfn(request):
                 return render(request, 'forgotpassword.html', {'invalid': 'Passwords do not match'})
         else:
             return render(request, 'forgotpassword.html', {'invalid': 'Invalid username or email'})
-    
+
     else:
         return render(request, 'forgotpassword.html')
 
+
 def logoutfn(request):
-   auth.logout(request)
-   return redirect('/')
+    auth.logout(request)
+    return redirect('/')
+
 
 @login_required
 def viewdetailfn(request, e_id):
     b = get_object_or_404(Book, id=e_id)
-    is_librarian = request.user.is_superuser or request.user.groups.filter(name='Librarian').exists()
+    is_librarian = request.user.is_superuser or request.user.groups.filter(
+        name='Librarian').exists()
     return render(request, 'viewdetail.html', {'view': b, 'is_librarian': is_librarian})
+
 
 @login_required
 def editbookfn(request, e_id):
@@ -145,12 +152,12 @@ def editbookfn(request, e_id):
     b = get_object_or_404(Book, id=e_id)
 
     if request.method == 'POST':
-        f = bookform(request.POST, request.FILES, instance=b)
+        f = BookForm(request.POST, request.FILES, instance=b)
         if f.is_valid():
             f.save()
             return redirect('/viewbooks')
     else:
-        f = bookform(instance=b)
+        f = BookForm(instance=b)
     return render(request, 'addbook.html', {'form': f})
 
 
@@ -167,11 +174,13 @@ def deletebookfn(request, d_id):
     else:
         return render(request, 'delete.html', {'del': b})
 
-   
+
 def searchfn(request):
-   s=request.GET['srch']
-   f=Book.objects.filter(Q(name__icontains=s) |Q(category__name__icontains=s)|Q(author__icontains=s))
-   return render(request,'search.html',{'search':f})
+    s = request.GET['srch']
+    f = Book.objects.filter(Q(name__icontains=s) | Q(
+        category__name__icontains=s) | Q(author__icontains=s))
+    return render(request, 'search.html', {'search': f})
+
 
 @login_required
 def adminpanelfn(request):
@@ -185,9 +194,9 @@ def adminpanelfn(request):
         librarian_group = Group.objects.get(name='Librarian')
         total_librarians = librarian_group.user_set.count()
     except Group.DoesNotExist:
-        total_librarians = 0  
+        total_librarians = 0
 
-    categories = Category.objects.all() 
+    categories = Category.objects.all()
     users = User.objects.all()
     languages = Language.objects.all()
 
@@ -195,9 +204,9 @@ def adminpanelfn(request):
         'total_books': total_books,
         'total_users': total_users,
         'total_librarians': total_librarians,
-        'categories': categories,   
+        'categories': categories,
         'users': users,
-        'languages': languages,             
+        'languages': languages,
         'librarian_group': librarian_group if 'librarian_group' in locals() else None
     })
 
@@ -218,20 +227,21 @@ def profilefn(request):
         'added_books': added_books
     })
 
-    
+
 @login_required
 def completeprofilefn(request):
     profile, created = Profile.objects.get_or_create(user=request.user)
 
     if request.method == 'POST':
-        f = ProfileForm(request.POST, request.FILES, instance=profile)  
+        f = ProfileForm(request.POST, request.FILES, instance=profile)
         if f.is_valid():
             f.save()
-            return redirect('/profile')   
+            return redirect('/profile')
     else:
         f = ProfileForm(instance=profile)
 
     return render(request, 'completeprofile.html', {'fm': f})
+
 
 def is_librarian_or_admin(user):
     return user.is_superuser or user.groups.filter(name='Librarian').exists()
@@ -244,21 +254,22 @@ def librarian_borrow_book(request, book_id):
         form = BorrowForm(request.POST)
         if form.is_valid():
             borrow = form.save(commit=False)
-            borrow.book = book  
+            borrow.book = book
             borrow.borrow_date = timezone.now()
             borrow.save()
 
-           
             book.available_copies -= 1
             book.save()
 
-            messages.success(request, f"{borrow.user.username} borrowed {book.name}")
+            messages.success(
+                request, f"{borrow.user.username} borrowed {book.name}")
             return redirect('viewdetail', e_id=book.id)
     else:
-        
+
         form = BorrowForm(initial={'book': book})
 
     return render(request, "borrow_book.html", {"form": form, "book": book})
+
 
 @login_required
 def librarian_return_book(request, borrow_id):
@@ -268,11 +279,11 @@ def librarian_return_book(request, borrow_id):
         borrow.return_date = timezone.now()
         borrow.save()
 
-       
         borrow.book.available_copies += 1
         borrow.book.save()
 
-        messages.success(request, f"Book '{borrow.book.name}' returned successfully!")
+        messages.success(
+            request, f"Book '{borrow.book.name}' returned successfully!")
     else:
         messages.warning(request, "This book has already been returned.")
 
@@ -288,23 +299,23 @@ def all_borrowsfn(request):
     return render(request, 'all_borrows.html', {'borrows': borrows})
 
 
-
 @login_required
 def delete_borrow(request, borrow_id):
     if not request.user.is_superuser:
         messages.error(request, "Only librarians can delete borrow records.")
-        return redirect('librarian_borrows')  
+        return redirect('librarian_borrows')
 
     borrow = get_object_or_404(Borrow, id=borrow_id)
     borrow.delete()
     messages.success(request, "Borrow history deleted successfully.")
     return redirect('all_borrows')
 
+
 @login_required
 def members_list(request):
     if not request.user.is_superuser:
         messages.error(request, "Only librarians can view members.")
-        return redirect('home')  
+        return redirect('home')
 
     members = User.objects.filter(is_superuser=False).order_by('username')
     total_members = members.count()
@@ -314,6 +325,7 @@ def members_list(request):
         'total_members': total_members
     })
 
+
 @login_required
 def add_category(request):
     if request.method == "POST":
@@ -322,11 +334,11 @@ def add_category(request):
             Category.objects.create(name=name)
     return redirect('adminpanel')
 
+
 @login_required
 def delete_category(request, cat_id):
     Category.objects.filter(id=cat_id).delete()
     return redirect('adminpanel')
-
 
 
 @login_required
@@ -334,17 +346,19 @@ def reserve_book(request, book_id):
     book = get_object_or_404(Book, id=book_id)
     if not book.is_available:
         Reservation.objects.create(user=request.user, book=book)
-        messages.success(request, f'You have reserved "{book.name}". The librarian will be notified.')
+        messages.success(
+            request, f'You have reserved "{book.name}". The librarian will be notified.')
     else:
-        messages.warning(request, f'"{book.name}" is still available. You can borrow it directly.')
+        messages.warning(
+            request, f'"{book.name}" is still available. You can borrow it directly.')
 
     return redirect('viewdetail', e_id=book.id)
 
 
 @login_required
 def reservation_list(request):
-    if not request.user.is_superuser:  
-        return redirect('home')  
+    if not request.user.is_superuser:
+        return redirect('home')
 
     reservations = Reservation.objects.all().order_by('-reserved_at')
     return render(request, "reservation_list.html", {"reservations": reservations})
@@ -374,6 +388,7 @@ def add_language(request):
             Language.objects.create(name=name)
     return redirect('adminpanel')
 
+
 @login_required
 def delete_language(request, language_id):
     Language.objects.filter(id=language_id).delete()
@@ -389,14 +404,16 @@ class UserAutocomplete(autocomplete.Select2QuerySetView):
             qs = qs.filter(username__icontains=self.q)
         return qs
 
+
 class BookAutocomplete(autocomplete.Select2QuerySetView):
     def get_queryset(self):
         if not self.request.user.is_authenticated:
             return Book.objects.none()
         qs = Book.objects.all()
-        if self.q:  
+        if self.q:
             qs = qs.filter(name__icontains=self.q)
         return qs
+
 
 @login_required
 def borrow_book(request, book_id):
@@ -408,20 +425,20 @@ def borrow_book(request, book_id):
             borrow = form.save(commit=False)
             borrow.book = book
             borrow.borrow_date = timezone.now()
-            borrow.return_date = None 
+            borrow.return_date = None
             borrow.save()
 
             if book.available_copies and book.available_copies > 0:
                 book.available_copies -= 1
                 book.save()
 
-            messages.success(request, f"{borrow.user.username} borrowed '{book.name}'.")
+            messages.success(
+                request, f"{borrow.user.username} borrowed '{book.name}'.")
             return redirect('viewdetail', e_id=book.id)
     else:
         form = BorrowForm(initial={'book': book})
 
     return render(request, "borrow.html", {"form": form, "book": book})
-
 
 
 class BorrowBookView(View):
@@ -435,13 +452,15 @@ class BorrowBookView(View):
             borrow = form.save(commit=False)
             borrow.borrow_date = timezone.now()
             borrow.save()
-            messages.success(request, f"{borrow.user.username} borrowed '{borrow.book.name}'.")
+            messages.success(
+                request, f"{borrow.user.username} borrowed '{borrow.book.name}'.")
             return redirect('borrow-general')
         return render(request, 'borrow.html', {'form': form})
 
+
 def mark_returned(request, borrow_id):
     borrow = get_object_or_404(Borrow, id=borrow_id)
-    if not borrow.return_date:  
+    if not borrow.return_date:
         borrow.return_date = timezone.now()
         borrow.save()
 

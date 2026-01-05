@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-je4kk%0x#06h0rg#oxp0d9$5dbz#w((zqd^x!rzq(u%h9k8lb(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['arunkumarcherakkara.pythonanywhere.com']
 
 
 # Application definition
@@ -122,10 +122,11 @@ LOGIN_REDIRECT_URL = '/'
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
+    BASE_DIR / "libraryapp" / "static",
 ]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_URL = '/media/'
-MEDIA_ROOT =BASE_DIR/ 'uploads'
+MEDIA_ROOT = BASE_DIR / 'uploads'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
