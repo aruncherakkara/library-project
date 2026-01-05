@@ -1,14 +1,9 @@
 .hero {
-    background: url("../images/club.JPG") no-repeat center center;
+    background-image: url("/static/images/library.jpg");
     background-size: cover;
-    width: 100%;
-    min-height: 55vh;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    background-position: center;
+    height: 80vh;
 }
-
 
 
 .hero .overlay {
@@ -48,16 +43,15 @@
 }
 
 @media (max-width: 768px) {
-    .hero {
-        min-height: 45vh;
-        background-position: center top;
+    @media (max-width: 768px) {
+        .hero {
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: top center;
+            height: auto;
+            padding-top: 60%;
+            padding-bottom: 20px;
+        }
     }
 
-    .hero h1 {
-        font-size: 1.6rem;
-    }
-
-    .hero p {
-        font-size: 1rem;
-    }
 }
