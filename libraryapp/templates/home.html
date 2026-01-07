@@ -8,27 +8,27 @@
 {% block content %}
 <div class="hero text-center">
     <div class="overlay">
-        <div class="hero-content text-white">
+        <div class="hero-content">
             <h1 class="display-4 fw-bold">SOUHRIDHA GRANDHALAYAM</h1>
             <p class="lead">"അറിവ് കണ്ടെത്തൂ, കഥകൾ പങ്കിടൂ, ഒരുമിച്ച് വളരൂ സൗഹൃദയുടെ കൂടെ."</p>
-            
+
             <div class="d-flex flex-wrap justify-content-center mt-4 gap-3">
                 <a href="/addbook" class="btn btn-success btn-lg">
                     <i class="bi bi-plus-circle"></i> Add Book
                 </a>
-                <a href="/viewbooks"  class="btn btn-info btn-lg text-white">
+                <a href="/viewbooks" class="btn btn-info btn-lg text-white">
                     <i class="bi bi-book"></i> View Books
                 </a>
                 <a href="/members" class="btn btn-warning btn-lg text-dark">
                     <i class="bi bi-people"></i> Members
                 </a>
-                <a href="/registeruser"  class="btn btn-primary btn-lg">
+                <a href="/registeruser" class="btn btn-primary btn-lg">
                     <i class="bi bi-person-plus"></i> New Member
                 </a>
                 {% if request.user.is_authenticated and is_librarian_or_admin %}
-                    <a href="{% url 'all_borrows' %}" class="btn btn-danger btn-lg">
-                        <i class="bi bi-arrow-left-right"></i> Borrow / Return
-                    </a>
+                <a href="{% url 'all_borrows' %}" class="btn btn-danger btn-lg">
+                    <i class="bi bi-arrow-left-right"></i> Borrow / Return
+                </a>
                 {% endif %}
             </div>
         </div>
@@ -43,7 +43,9 @@
                 <div class="card-body">
                     <i class="bi bi-eye display-4 text-primary mb-3"></i>
                     <h5 class="card-title fw-bold">Our Vision</h5>
-                    <p class="card-text">To build a strong and informed society where learning, creativity, and social unity grow together, making Souhrida Grandhalayam and Souhrida Barroty Club a hub of progress and togetherness.</p>
+                    <p class="card-text">To build a strong and informed society where learning, creativity, and social
+                        unity grow together, making Souhrida Grandhalayam and Souhrida Barroty Club a hub of progress
+                        and togetherness.</p>
                 </div>
             </div>
         </div>
@@ -53,7 +55,9 @@
                 <div class="card-body">
                     <i class="bi bi-bullseye display-4 text-success mb-3"></i>
                     <h5 class="card-title fw-bold">Our Mission</h5>
-                    <p class="card-text">To build a united and progressive community by empowering all age groups and promoting cultural, educational, and social activities. We strive for inclusiveness and harmony while working towards a drug-free society.</p>
+                    <p class="card-text">To build a united and progressive community by empowering all age groups and
+                        promoting cultural, educational, and social activities. We strive for inclusiveness and harmony
+                        while working towards a drug-free society.</p>
                 </div>
             </div>
         </div>
@@ -63,7 +67,10 @@
                 <div class="card-body">
                     <i class="bi bi-info-circle display-4 text-warning mb-3"></i>
                     <h5 class="card-title fw-bold">About Us</h5>
-                    <p class="card-text">Founded in 2009, Souhrida Kala Kayika Samithi Barrotty serves society without political, religious, or caste boundaries. We bring together people of all ages through groups like Souhrida Balavedhi, Youvajana Sangham, and Swasraya Sangam. With Kudumbasree and NYK affiliation, we continue to play a crucial role in community growth and unity.</p>
+                    <p class="card-text">Founded in 2009, Souhrida Kala Kayika Samithi Barrotty serves society without
+                        political, religious, or caste boundaries. We bring together people of all ages through groups
+                        like Souhrida Balavedhi, Youvajana Sangham, and Swasraya Sangam. With Kudumbasree and NYK
+                        affiliation, we continue to play a crucial role in community growth and unity.</p>
                 </div>
             </div>
         </div>
