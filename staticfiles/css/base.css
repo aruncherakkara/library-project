@@ -1,0 +1,146 @@
+.navbar {
+    background: linear-gradient(90deg, #0f2027, #203a43, #2c5364);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    border-bottom: 2px solid #03e9f4;
+}
+
+
+.navbar .form-control {
+    border-radius: 25px;
+    border: 1px solid #03e9f4;
+    background: #1b1b1b;
+    color: #fff;
+    box-shadow: none;
+    transition: 0.3s;
+}
+
+.navbar .form-control::placeholder {
+    color: #bbb;
+}
+
+
+.navbar-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: #ffffff !important;
+    letter-spacing: 1px;
+    text-shadow: none;
+    transition: transform 0.3s ease;
+}
+
+.navbar-brand:hover {
+    transform: scale(1.05);
+    color: #f1f1f1 !important;
+}
+
+
+.navbar .btn-outline-light {
+    border-radius: 25px;
+    border: 1px solid #03e9f4;
+    color: #fff !important;
+    background: transparent;
+}
+
+.navbar .btn-outline-light:hover {
+    background: #03e9f4;
+    color: #111 !important;
+}
+
+
+
+.footer-dark {
+    background: linear-gradient(180deg, #000, #111);
+    color: #ccc;
+    padding: 50px 0 20px;
+    font-size: 0.95rem;
+    border-top: 2px solid #03e9f4;
+    width: 100%;
+}
+
+
+.footer-dark .row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.footer-dark .col-md-3 {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 20px;
+}
+
+
+.footer-dark h5 {
+    margin-bottom: 20px;
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #03e9f4;
+    font-family: 'Poppins', sans-serif;
+}
+
+
+.footer-dark p,
+.footer-dark li,
+.footer-dark a {
+    font-weight: normal;
+    font-family: 'Roboto', sans-serif;
+    color: #ffffff;
+    font-size: 1rem;
+    text-decoration: none;
+    line-height: 1.7;
+}
+
+.footer-dark a:hover {
+    color: #03e9f4;
+    transform: translateX(4px);
+}
+
+
+html,
+body {
+    height: auto;
+    margin: 0;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+body {
+    display: block;
+}
+
+.notification-bar {
+    margin: 10px 0;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.warning {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
+
+main.container {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.footer-dark hr {
+    margin: 15px 0 5px 0;
+}
+
+footer {
+    background: linear-gradient(180deg, #000, #111);
+    margin: 0;
+    padding: 0;
+}
