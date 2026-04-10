@@ -25,11 +25,12 @@ SECRET_KEY = 'django-insecure-je4kk%0x#06h0rg#oxp0d9$5dbz#w((zqd^x!rzq(u%h9k8lb(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['arunkumarcherakkara.pythonanywhere.com',
-                 'library-project-3izs.onrender.com',
-                 '127.0.0.1',
-                 'localhost',]
-
+ALLOWED_HOSTS = [
+    'arunkumarcherakkara.pythonanywhere.com',
+    'library-project-3izs.onrender.com',
+    '127.0.0.1',
+    'localhost'
+]
 
 # Application definition
 
